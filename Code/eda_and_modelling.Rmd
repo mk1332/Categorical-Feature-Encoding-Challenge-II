@@ -1,0 +1,62 @@
+---
+title: "Categorical Feature Encoding challenge"
+output: pdf
+vertical_layout: scroll
+---
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+options(knitr.table.format = 'markdown')
+
+## initialize require library
+library(data.table)
+library(dplyr)
+library(DataExplorer)
+```
+
+
+
+```{r}
+## Read data into environment ##
+train_data <- fread("Data/train.csv")
+
+##Brief summary of data ###
+summary(train_data)
+
+```
+
+```{r}
+##Visualise dataset ##
+knitr::kable(head(train_data,5))
+```
+
+
+```{r}
+DataExplorer::plot_intro(train_data)
+```
+
+
+
+```{r}
+## EDA for variables 
+
+#Target distibution 
+
+plot_bar(train_data$target)
+(mean(train_data$target))
+
+```
+
+
+```{r}
+## Univariate analysis for the predictive variables 
+
+## Convert binary variables into factors of two classes 
+
+train_data[,c(2:6)] <- lapply(train_data[,c(2:6)],function(X) as.factor(as.character(X)))
+
+plot_bar(data = train_data[,c(2:6)],nrow = 3,ncol = 1)
+
+```
+
